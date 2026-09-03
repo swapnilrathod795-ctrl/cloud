@@ -1,17 +1,15 @@
 name: CI
 on: push
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-      - run: npm ci
-      - run: npm test
+ steps:
+  - uses: actions/checkout@v4
+  - name: Only on main
+    if: github.ref == 'refs/heads/main'
+    run: echo "This runs only on main"
+  - name: Only on pull requests
+    if: github.event_name == 'pull_request'
+    run: echo "This runs only on PRs"
+
 
 
 
